@@ -54,9 +54,6 @@ public class Book {
 	@JoinColumn(name="reader_id")
 	private User reader;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="returnUser_id")
-	private User returnUser;
 	
 	public Book() {
 	}
@@ -123,14 +120,6 @@ public class Book {
 
 	public void setReader(User reader) {
 		this.reader = reader;
-	}
-
-	public User getReturnUser() {
-		return returnUser;
-	}
-
-	public void setReturnUser(User returnUser) {
-		this.returnUser = returnUser;
 	}
 
 	@PrePersist

@@ -90,9 +90,12 @@ public class HomeController {
 		Book book = bookService.findOneBook(id);
 		// only the user/writer logged in can edit the book
 		Long writerId = book.getWriter().getId();
-		if(writerId != (Long) session.getAttribute("userId")) {
+		
+		String userIdString = String.valueOf(session.getAttribute("userId"));
+		if(writerId != Long.valueOf(userIdString)) {
 			return "redirect:/";
 		}
+
 		model.addAttribute("book", book);
 		return "editBookForm.jsp";
 	}
@@ -102,9 +105,7 @@ public class HomeController {
 	public String processShowOneBook(@Valid @ModelAttribute("book") Book book,
 			BindingResult result, @PathVariable("id") Long id, HttpSession session) {
 		Long writerId = book.getWriter().getId();
-		if(writerId != (Long) session.getAttribute("userId")) {
-			return "redirect:/";
-		}
+		
 		if(result.hasErrors()) {
 			return "editBookForm.jsp";			
 		} else {
